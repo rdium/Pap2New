@@ -28,7 +28,7 @@
 	[fetchRequest setEntity:entity];
 	
 	// Set the batch size to a suitable number.
-	[fetchRequest setFetchBatchSize:20];
+	//[fetchRequest setFetchBatchSize:20];
 	
 	// Edit the sort key as appropriate.
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"user" ascending:NO];
@@ -116,8 +116,8 @@
 	
 	pTable.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemContacts tag:1] autorelease];
 	
-	// REQUIRED?
-	//pTable.managedObjectContext = mOC;
+	
+	pTable.mOC = managedObjectContext_;
 	
 	
 	[nC1 pushViewController:pTable animated:NO];	

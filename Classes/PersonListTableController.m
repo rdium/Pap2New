@@ -5,6 +5,51 @@
 
 @implementation PersonListTableController
 
+@synthesize mOC;
+@synthesize fetchedResultsController;
+
+
+#pragma mark -
+#pragma mark Fetched results controller
+
+/**
+ Returns the fetched results controller. Creates and configures the controller if necessary.
+ */
+- (NSFetchedResultsController *)fetchedResultsController {
+    
+    if (fetchedResultsController != nil) {
+        return fetchedResultsController;
+    }
+    
+	NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:mOC];
+	[request setEntity:entity];
+	
+	// A Predicate is not required but a sort descriptor is,
+	// or the results will be un-ordered by default.
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+	
+	[request setSortDescriptors:sortDescriptors];
+	//[request setFetchBatchSize:20];
+	[sortDescriptors release];
+	
+	fetchedResultsController = [[NSFetchedResultsController alloc]
+								initWithFetchRequest:request
+								managedObjectContext:mOC
+								sectionNameKeyPath:nil
+								cacheName:@"tempPerson"];
+	
+	[request release];
+	
+	return fetchedResultsController;
+}    
+
+
+
+
+
+
 
 #pragma mark -
 #pragma mark Initialization
